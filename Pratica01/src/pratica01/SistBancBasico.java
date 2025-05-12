@@ -22,23 +22,25 @@ public class SistBancBasico {
     }
     
     boolean saca(double valor) {
-        if (saldo < valor) { //pro desafio é só trocar saldo + limite < valor
-            return false;
-        } else {
-            saldo = saldo - valor;
-            return true;
+        if(saldo < valor){
+           saldo = saldo + limite;
+           saldo = saldo - valor;
+           limite = 0; //tem que mudar isso ae
+           return true;
         }
+        else
+          return false;
     }
 
-    void imprimeDono(String dono){
+    void imprimeDono(){
         System.out.println("Dono:" + dono);
     }
 
-    void devolveSaldo(double saldo){
+    double devolveSaldo(){
         return saldo;
     }
 
-    transferePara(SistBancBasico destino, double quantidade){
+    boolean transferePara(double quantidade, SistBancBasico destino){
         if(saca(quantidade)){
             destino.deposita(quantidade);
             return true;
@@ -47,25 +49,56 @@ public class SistBancBasico {
     }
 
     void imprimeDados(){
-        System.out.print("Número: " + numero);
-        System.out.print("Dono: " + saldo);
-        System.out.print("Saldo: " + saldo);
+        System.out.print("Número: " + numero + "\n");
+        System.out.print("Dono: " + saldo + "\n");
+        System.out.print("Saldo: " + saldo + "\n");
         System.out.print("Limite: " + limite + "\n");
 
     }
 
     public static void main(String[] args){
-        SistBancBasico maria, joao; //instanciando o objeto, é aqui que vamos testar se tudo funciona;
+        
+        SistBancBasico maria, carlinhos; //instanciando o objeto, é aqui que vamos testar se tudo funciona;
        
         maria = new SistBancBasico();
-        joao = new SistBancBasico();
+        carlinhos = new SistBancBasico();
 
-        maria.dono = "Maria";
+        maria.numero = 123;
+        maria.dono = "Maria Silva";
         maria.saldo = 1000;
+        maria.limite = 500;        
 
-        maria.deposita(200);
-        System.out.println("Dono: " + maria.dono);
-        System.out.println("Saldo: " + maria.saldo); //sout tab faz automaticamente essa linha
-    }
+
+        carlinhos.numero = 250;
+        carlinhos.dono = "Carlinhos Teixeira";
+
+        //Aqui começa as operações~
+        System.out.println("DADOS DA CONTA:");
+        maria.imprimeDados();
         
+        System.out.println("\n" + "Depositando R$200 na conta de Maria...");
+            maria.deposita(200);
+        System.out.println("Novo saldo: " + maria.devolveSaldo() + "\n");
+        
+        System.out.println("Sacando R$1500,00 da conta de Maria...");
+            if(maria.saca(1500)){
+                System.out.println("Saque realizado");
+            }
+            else
+              System.out.println("Saldo Insuficiente!");
+        
+            System.out.println("Saldo atual: R$" + maria.devolveSaldo() + "\n"); //aqui deveria ser 200?
+            
+            System.out.println("Transferindo R$300 para Carlinhos...");
+                if( maria.transferePara(300, carlinhos) ){
+                    System.out.println("Transferência Realizada!" + "\n");
+                }
+                else
+                    System.out.println("Saldo Insuficiente!" + "\n");
+                
+            System.out.println("Saldo final das contas: ");
+            System.out.println("Conta 1 - Saldo: " + maria.devolveSaldo());
+            System.out.println("Conta 2 - Saldo: " + carlinhos.devolveSaldo());
+        }
+   
     }
