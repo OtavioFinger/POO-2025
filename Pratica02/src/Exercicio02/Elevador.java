@@ -21,7 +21,7 @@ public class Elevador {
         this.totalAndares = totalAndares;
         this.capacidade = capacidade;
         this.numPessoas = 0;
-         //Verdadeiro método construtor
+         //Verdadeiro método construtoré
     }
     
 
